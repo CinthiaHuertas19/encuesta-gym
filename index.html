@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encuesta Gym</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <div class="container">
+    <h1>¿Cómo estuvo tu entrenamiento hoy? 💪</h1>
+
+    <div class="emoji-options" id="emoji-options">
+      <label class="emoji-option">
+        😄<br>¡Me encantó!
+        <input type="radio" name="satisfaccion" value="Muy satisfecho">
+      </label>
+      <label class="emoji-option">
+        🙂<br>Bien
+        <input type="radio" name="satisfaccion" value="Satisfecho">
+      </label>
+      <label class="emoji-option">
+        😐<br>Neutral
+        <input type="radio" name="satisfaccion" value="Neutral">
+      </label>
+      <label class="emoji-option">
+        🙁<br>No tan bien
+        <input type="radio" name="satisfaccion" value="Insatisfecho">
+      </label>
+    </div>
+
+    <textarea id="comentario" placeholder="¿Qué podríamos mejorar? (Opcional)"></textarea>
+    <button onclick="enviarFormulario()">Enviar</button>
+    <div class="thanks" id="graciasMensaje">¡Gracias por tu feedback! 🧡</div>
+  </div>
+
+  <script>
+    const opciones = document.querySelectorAll('.emoji-option');
+    opciones.forEach(op => {
+      op.addEventListener('click', () => {
+        opciones.forEach(o => o.classList.remove('selected'));
+        op.classList.add('selected');
+        op.querySelector('input').checked = true;
+      });
+    });
+
+    function enviarFormulario() {
+      const seleccion = document.querySelector('input[name="satisfaccion"]:checked');
+      const comentario = document.getElementById("comentario").value;
+
+      if (!seleccion) {
+        alert("Por favor seleccioná una opción.");
+        return;
+      }
+
+      const data = {
+        satisfaccion: seleccion.value,
+        comentario: comentario
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbzaLksxx0J7A3_dh4jpeDM6jK-PrdF6tak-dsc6K_TwnfZ6KpTp9VBPg4nwOYXW5P0_sg/exec", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => res.json())
+      .then(response => {
+        document.getElementById("graciasMensaje").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("graciasMensaje").style.display = "none";
+          document.querySelector('input[name="satisfaccion"]:checked').checked = false;
+          document.getElementById("comentario").value = "";
+          opciones.forEach(o => o.classList.remove('selected'));
+        }, 3000);
+      })
+      .catch(error => {
+        alert("Ocurrió un error al enviar. Intentá nuevamente.");
+        console.error(error);
+      });
+    }
+  </script>
+</body>
+</html>
+
+
