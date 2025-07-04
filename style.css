@@ -76,8 +76,10 @@ body {
   
   textarea {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     height: 100px;
-    padding: 5px;
+    padding: 8px;
     border-radius: 8px;
     border: 1px solid #ccc;
     resize: none;
