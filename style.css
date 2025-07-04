@@ -1,7 +1,7 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background: #f0f4f8;
+  background-image: url("fondo.jpg");
   margin: 0;
   padding: 20px;
   display: flex;
@@ -9,6 +9,24 @@ body {
   align-items: center;
   color: #333;
 }
+
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .logo img {
+    width: 120px; /* ajusta el tamaño según tu diseño */
+    height: auto;
+    border-radius: 12px; /* si quieres esquinas redondeadas, opcional */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* sombra ligera para destacar */
+    transition: transform 0.3s ease;
+  }
+  
+  .logo img:hover {
+    transform: scale(1.05); /* efecto zoom suave al pasar el cursor */
+  }
+  
 
 .container {
   max-width: 400px;
